@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import filedialog
 import subprocess
 
+
 class YOLOv5DetectorGUI:
     def __init__(self, master):
         self.master = master
@@ -16,10 +17,14 @@ class YOLOv5DetectorGUI:
         self.source_label.pack()
         self.source_entry = tk.Entry(master)
         self.source_entry.pack()
-        self.browse_button = tk.Button(master, text="Browse", command=self.browse_source)
+        self.browse_button = tk.Button(
+            master, text="Browse", command=self.browse_source
+        )
         self.browse_button.pack()
 
-        self.run_button = tk.Button(master, text="Run Detection", command=self.run_detection)
+        self.run_button = tk.Button(
+            master, text="Run Detection", command=self.run_detection
+        )
         self.run_button.pack()
 
     def browse_source(self):
@@ -30,13 +35,15 @@ class YOLOv5DetectorGUI:
     def run_detection(self):
         # weights = self.weights_entry.get()
         source = self.source_entry.get()
-        cmd = ['python', 'detect_copy.py', '--source', source]
+        cmd = ["python", "detect_copy.py", "--source", source]
         subprocess.run(cmd)
+
 
 def main():
     root = tk.Tk()
     yolo_gui = YOLOv5DetectorGUI(root)
     root.mainloop()
+
 
 if __name__ == "__main__":
     main()

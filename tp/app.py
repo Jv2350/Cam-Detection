@@ -7,6 +7,7 @@ import subprocess
 import cv2
 import os
 
+
 class YOLOv5App:
     def __init__(self, root):
         self.root = root
@@ -18,25 +19,35 @@ class YOLOv5App:
         self.image_label = tk.Label(root)
         self.image_label.pack()
 
-        self.start_button = tk.Button(root, text="Start Detection", command=self.start_detection)
+        self.start_button = tk.Button(
+            root, text="Start Detection", command=self.start_detection
+        )
         self.start_button.pack(side=tk.LEFT, padx=10)
 
-        self.stop_button = tk.Button(root, text="Stop Detection", command=self.stop_detection, state=tk.DISABLED)
+        self.stop_button = tk.Button(
+            root, text="Stop Detection", command=self.stop_detection, state=tk.DISABLED
+        )
         self.stop_button.pack(side=tk.RIGHT, padx=10)
 
-        self.output_dir_button = tk.Button(root, text="Select Output Directory", command=self.select_output_directory)
+        self.output_dir_button = tk.Button(
+            root, text="Select Output Directory", command=self.select_output_directory
+        )
         self.output_dir_button.pack(side=tk.LEFT, padx=10)
 
         self.exit_button = tk.Button(root, text="Exit", command=root.quit)
         self.exit_button.pack(side=tk.RIGHT, padx=10)
 
-        self.status_bar = tk.Label(root, text="Status: Ready", bd=1, relief=tk.SUNKEN, anchor=tk.W)
+        self.status_bar = tk.Label(
+            root, text="Status: Ready", bd=1, relief=tk.SUNKEN, anchor=tk.W
+        )
         self.status_bar.pack(side=tk.BOTTOM, fill=tk.X)
 
         self.progress_var = tk.DoubleVar()
-        self.progress_bar = ttk.Progressbar(root, variable=self.progress_var, mode='indeterminate')
+        self.progress_bar = ttk.Progressbar(
+            root, variable=self.progress_var, mode="indeterminate"
+        )
         self.progress_bar.pack(side=tk.BOTTOM, fill=tk.X)
-        
+
         self.process = None
         self.output_dir = ""
 
@@ -67,7 +78,7 @@ class YOLOv5App:
             stderr=subprocess.STDOUT,
             text=True,
             bufsize=1,  # Line buffered
-            universal_newlines=True
+            universal_newlines=True,
         )
 
         self.start_button.config(state=tk.DISABLED)
@@ -87,7 +98,7 @@ class YOLOv5App:
 
             self.progress_bar.stop()
             self.progress_var.set(0)
-            
+
             self.start_button.config(state=tk.NORMAL)
             self.stop_button.config(state=tk.DISABLED)
 
@@ -104,7 +115,7 @@ class YOLOv5App:
             self.append_output(line.strip())
 
             # Update image only if the file exists
-            image_path = 'output.jpg'
+            image_path = "output.jpg"
             self.root.after(10, update_image, image_path)
 
         self.process.wait()
@@ -133,8 +144,11 @@ class YOLOv5App:
         self.output_dir = filedialog.askdirectory()
         if self.output_dir:
             self.output_text.config(state=tk.NORMAL)
-            self.output_text.insert(tk.END, f"Selected output directory: {self.output_dir}\n")
+            self.output_text.insert(
+                tk.END, f"Selected output directory: {self.output_dir}\n"
+            )
             self.output_text.config(state=tk.DISABLED)
+
 
 if __name__ == "__main__":
     root = tk.Tk()
